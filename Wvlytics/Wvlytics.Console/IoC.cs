@@ -28,9 +28,8 @@ namespace Wvlytics.Console
 
         private static void SetupDynamo(ContainerBuilder builder)
         {
-            const string accessKeyId = "AKIAJZRADGH4HP6XJ3WA";
-            const string secretKey = "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";
-            var client = new AmazonDynamoDBClient(accessKeyId,secretKey,RegionEndpoint.APSoutheast2);
+            var client = new AmazonDynamoDBClient();
+            var tables = client.ListTables();
             builder.RegisterInstance(client).AsSelf().AsImplementedInterfaces();
             builder.RegisterType<DynamoDBContext>().UsingConstructor(typeof(IAmazonDynamoDB));
         }
