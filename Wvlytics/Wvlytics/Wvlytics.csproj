@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{43BC9355-AB5B-4BFB-AEE1-B1E3A866068E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wvlytics</RootNamespace>
+    <AssemblyName>Wvlytics</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK">
+      <HintPath>..\packages\AWSSDK.2.3.14.0\lib\net45\AWSSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.3.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="LazyCache">
+      <HintPath>..\packages\LazyCache.0.5.5222.23409\lib\net40\LazyCache.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\Guild\GuildEmblem.cs" />
+    <Compile Include="Api\BaseApi.cs" />
+    <Compile Include="Api\Guild\GuildApi.cs" />
+    <Compile Include="Api\Guild\IGuildApi.cs" />
+    <Compile Include="Api\WvW\IWvwApi.cs" />
+    <Compile Include="Api\WvW\WvWApi.cs" />
+    <Compile Include="Api\WvW\Model\BonusState.cs" />
+    <Compile Include="Api\Guild\GuildDetails.cs" />
+    <Compile Include="Api\WvW\Model\MapState.cs" />
+    <Compile Include="Api\WvW\Model\Match.cs" />
+    <Compile Include="Api\WvW\Model\MatchDetails.cs" />
+    <Compile Include="Api\WvW\Model\Matches.cs" />
+    <Compile Include="Api\WvW\Model\Objective.cs" />
+    <Compile Include="Api\WvW\Model\ObjectiveState.cs" />
+    <Compile Include="Api\WvW\Model\World.cs" />
+    <Compile Include="Assembly.cs" />
+    <Compile Include="Model\BonusSnapshot.cs" />
+    <Compile Include="Model\MapHistorySnapshot.cs" />
+    <Compile Include="Services\AppenderService.cs" />
+    <Compile Include="Services\ConsolePrinter.cs" />
+    <Compile Include="Services\IMatchService.cs" />
+    <Compile Include="Services\IMatchSnapshotService.cs" />
+    <Compile Include="Services\IObjectiveService.cs" />
+    <Compile Include="Services\IPrinterService.cs" />
+    <Compile Include="Services\ISnapshottingService.cs" />
+    <Compile Include="Services\IWorldService.cs" />
+    <Compile Include="Model\MatchHistory.cs" />
+    <Compile Include="Model\MatchHistorySnapshot.cs" />
+    <Compile Include="Services\MatchService.cs" />
+    <Compile Include="Services\MatchSnapshotService.cs" />
+    <Compile Include="Services\ObjectiveService.cs" />
+    <Compile Include="Model\ObjectiveSnapshot.cs" />
+    <Compile Include="Model\Score.cs" />
+    <Compile Include="Services\SnapshottingService.cs" />
+    <Compile Include="Util\MatchHistoryUtil.cs" />
+    <Compile Include="Services\WorldService.cs" />
+    <Compile Include="ChangePrinter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\RestSharpRxHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
