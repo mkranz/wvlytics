@@ -1,7 +1,7 @@
 namespace Wvlytics
 {
-    public static class Assembly
+    public static class AssemblyRef
     {
-        public static System.Reflection.Assembly Reference {get { return typeof (Assembly).Assembly; }}
+        public static System.Reflection.Assembly Reference {get { return typeof (AssemblyRef).Assembly; }}
     }
 }

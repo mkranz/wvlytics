@@ -87,6 +87,9 @@
     <Compile Include="Api\WvW\Model\ObjectiveState.cs" />
     <Compile Include="Api\WvW\Model\World.cs" />
     <Compile Include="Assembly.cs" />
+    <Compile Include="Config\DynamoModule.cs" />
+    <Compile Include="Config\LocalPersistenceConfig.cs" />
+    <Compile Include="Config\WvlyticsCoreModule.cs" />
     <Compile Include="Model\BonusSnapshot.cs" />
     <Compile Include="Model\MapHistorySnapshot.cs" />
     <Compile Include="Services\AppenderService.cs" />
