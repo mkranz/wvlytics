@@ -107,6 +107,7 @@
     <Compile Include="Services\IMatchService.cs" />
     <Compile Include="Services\IMatchSnapshotService.cs" />
     <Compile Include="Services\IObjectiveService.cs" />
+    <Compile Include="Services\IObjectiveSnapshotWriter.cs" />
     <Compile Include="Services\IPrinterService.cs" />
     <Compile Include="Services\IQueryService.cs" />
     <Compile Include="Services\IScoreReader.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Model\ObjectiveSnapshot.cs" />
     <Compile Include="Model\Score.cs" />
     <Compile Include="Services\LocalFileQueryService.cs" />
+    <Compile Include="Services\BinaryObjectiveSnapshotWriter.cs" />
     <Compile Include="Services\SnapshottingService.cs" />
     <Compile Include="Util\MatchHistoryUtil.cs" />
     <Compile Include="Services\WorldService.cs" />

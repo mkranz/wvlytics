@@ -1,6 +1,6 @@
 ﻿using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
-using RestSharp.Serializers;
 using Wvlytics.Model;
 using Wvlytics.Util;
 
@@ -11,6 +11,12 @@ namespace Wvlytics.Services
         public static string BasePath = @"C:\gw2data";
         public static string LocalMatchFileName = "matchInfo.json";
         public static string LocalSnapshotFileName = "scores.dat";
+        public static string LocalObjectivesFileName = "objectives.dat";
+
+        public static string GetMatchPath(string wvwMatchHistoryId)
+        {
+            return GetMatchPath(wvwMatchHistoryId.ToMatchId(), wvwMatchHistoryId.ToMatchTimestamp());
+        }
 
         public static string GetMatchPath(string wvwMatchId, string startTime)
         {
@@ -26,17 +32,18 @@ namespace Wvlytics.Services
 
     public class LocalFileAppenderService : IAppenderService
     {
-
         private readonly IScoreWriter _scoreWriter;
+        private readonly IObjectiveSnapshotWriter _objectiveSnapshotWriter;
 
-        public LocalFileAppenderService(IScoreWriter scoreWriter)
+        public LocalFileAppenderService(IScoreWriter scoreWriter, IObjectiveSnapshotWriter objectiveSnapshotWriter)
         {
             _scoreWriter = scoreWriter;
+            _objectiveSnapshotWriter = objectiveSnapshotWriter;
         }
 
         public void SaveMatch(MatchHistory match)
         {
-            var matchPath = LocalFileConfig.GetMatchPath(match.MatchId, match.StartTime.ToString("yy-MM-dd"));
+            var matchPath = LocalFileConfig.GetMatchPath(match.MatchHistoryId);
             var path = Path.Combine(matchPath, LocalFileConfig.LocalMatchFileName);
             var contents = JsonConvert.SerializeObject(match);
             File.WriteAllText(path, contents);
@@ -44,7 +51,13 @@ namespace Wvlytics.Services
 
         public void SaveMatchSnapshot(MatchHistorySnapshot snapshot)
         {
-            var matchPath = LocalFileConfig.GetMatchPath(snapshot.MatchHistoryId.ToMatchId(), snapshot.MatchHistoryId.ToMatchTimestamp());
+            var matchPath = LocalFileConfig.GetMatchPath(snapshot.MatchHistoryId);
+            WriteScores(snapshot, matchPath);
+            WriteObjectives(snapshot, matchPath);
+        }
+
+        private void WriteScores(MatchHistorySnapshot snapshot, string matchPath)
+        {
             var path = Path.Combine(matchPath, LocalFileConfig.LocalSnapshotFileName);
 
             using (var stream = new FileStream(path, FileMode.Append, FileAccess.Write, FileShare.Read))
@@ -53,7 +66,22 @@ namespace Wvlytics.Services
                 {
                     Timestamp = snapshot.Timestamp,
                     Scores = snapshot.Scores
-                });    
+                });
+            }
+        }
+        private void WriteObjectives(MatchHistorySnapshot snapshot, string matchPath)
+        {
+            var path = Path.Combine(matchPath, LocalFileConfig.LocalObjectivesFileName);
+
+            using (var stream = new FileStream(path, FileMode.Append, FileAccess.Write, FileShare.Read))
+            {
+                _objectiveSnapshotWriter.WriteSnapshots(stream, 
+                    snapshot.Timestamp,
+                    snapshot.RedHome.Objectives
+                        .Concat(snapshot.GreenHome.Objectives)
+                        .Concat(snapshot.BlueHome.Objectives)
+                        .Concat(snapshot.Center.Objectives)
+                        );
             }
         }
     }

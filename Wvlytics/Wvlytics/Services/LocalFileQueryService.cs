@@ -30,7 +30,7 @@ namespace Wvlytics.Services
 
         public IEnumerable<ScoreSnapshot> GetScoreHistory(string matchHistoryId)
         {
-            var matchPath = LocalFileConfig.GetMatchPath(matchHistoryId.ToMatchId(), matchHistoryId.ToMatchTimestamp());
+            var matchPath = LocalFileConfig.GetMatchPath(matchHistoryId);
             var path = Path.Combine(matchPath, LocalFileConfig.LocalSnapshotFileName);
 
             using (var stream = new FileStream(path,FileMode.Open, FileAccess.Read, FileShare.Read))
