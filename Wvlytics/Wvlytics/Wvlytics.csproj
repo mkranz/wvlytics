@@ -47,6 +47,10 @@
     <Reference Include="LazyCache">
       <HintPath>..\packages\LazyCache.0.5.5222.23409\lib\net40\LazyCache.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
@@ -88,25 +92,36 @@
     <Compile Include="Api\WvW\Model\World.cs" />
     <Compile Include="Assembly.cs" />
     <Compile Include="Config\DynamoModule.cs" />
+    <Compile Include="Config\LocalFileModule.cs" />
     <Compile Include="Config\LocalPersistenceConfig.cs" />
     <Compile Include="Config\WvlyticsCoreModule.cs" />
     <Compile Include="Model\BonusSnapshot.cs" />
     <Compile Include="Model\MapHistorySnapshot.cs" />
-    <Compile Include="Services\AppenderService.cs" />
+    <Compile Include="Model\ScoreSnapshot.cs" />
+    <Compile Include="Services\DynamoDBAppenderService.cs" />
+    <Compile Include="Services\BinaryScoreReader.cs" />
+    <Compile Include="Services\BinaryScoreWriter.cs" />
     <Compile Include="Services\ConsolePrinter.cs" />
+    <Compile Include="Services\DynamoQueryService.cs" />
+    <Compile Include="Services\IAppenderService.cs" />
     <Compile Include="Services\IMatchService.cs" />
     <Compile Include="Services\IMatchSnapshotService.cs" />
     <Compile Include="Services\IObjectiveService.cs" />
     <Compile Include="Services\IPrinterService.cs" />
+    <Compile Include="Services\IQueryService.cs" />
+    <Compile Include="Services\IScoreReader.cs" />
+    <Compile Include="Services\IScoreWriter.cs" />
     <Compile Include="Services\ISnapshottingService.cs" />
     <Compile Include="Services\IWorldService.cs" />
     <Compile Include="Model\MatchHistory.cs" />
     <Compile Include="Model\MatchHistorySnapshot.cs" />
+    <Compile Include="Services\LocalFileAppenderService.cs" />
     <Compile Include="Services\MatchService.cs" />
     <Compile Include="Services\MatchSnapshotService.cs" />
     <Compile Include="Services\ObjectiveService.cs" />
     <Compile Include="Model\ObjectiveSnapshot.cs" />
     <Compile Include="Model\Score.cs" />
+    <Compile Include="Services\LocalFileQueryService.cs" />
     <Compile Include="Services\SnapshottingService.cs" />
     <Compile Include="Util\MatchHistoryUtil.cs" />
     <Compile Include="Services\WorldService.cs" />

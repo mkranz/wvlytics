@@ -13,5 +13,9 @@ namespace Wvlytics.Util
         {
             return matchHistoryId.Split('_')[0];
         }
+        public static string ToMatchTimestamp(this string matchHistoryId)
+        {
+            return matchHistoryId.Split('_')[1];
+        }
     }
 }

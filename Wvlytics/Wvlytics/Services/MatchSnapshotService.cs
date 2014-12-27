@@ -34,8 +34,8 @@ namespace Wvlytics.Services
                 Scores = new Score()
                 {
                     RedScore = details.scores[0],
-                    GreenScore = details.scores[1],
-                    BlueScore = details.scores[2],
+                    BlueScore = details.scores[1],
+                    GreenScore = details.scores[2],
                 }
             };
             ScoreSum(snapshot);
@@ -63,8 +63,8 @@ namespace Wvlytics.Services
                 Scores = new Score()
                 {
                     RedScore = map.scores[0],
-                    GreenScore = map.scores[1],
-                    BlueScore = map.scores[2],
+                    BlueScore = map.scores[1],
+                    GreenScore = map.scores[2],
                 }
             };
             CalculateScoresFor(mapSnapshot);
@@ -74,7 +74,6 @@ namespace Wvlytics.Services
 
         private void CalculateScoresFor(MapHistorySnapshot mapSnapshot)
         {
-
             mapSnapshot.Scores.RedPotentialPoints = PotentialPointsFor(mapSnapshot,"Red");
             mapSnapshot.Scores.GreenPotentialPoints = PotentialPointsFor(mapSnapshot, "Green");
             mapSnapshot.Scores.BluePotentialPoints = PotentialPointsFor(mapSnapshot, "Blue");

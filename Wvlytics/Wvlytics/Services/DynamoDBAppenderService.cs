@@ -22,10 +22,4 @@ namespace Wvlytics.Services
             _context.Save(snapshot);
         }
     }
-
-    public interface IAppenderService
-    {
-        void SaveMatch(MatchHistory match);
-        void SaveMatchSnapshot(MatchHistorySnapshot snapshot);
-    }
 }

@@ -32,7 +32,8 @@ namespace Wvlytics.Web
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule<WvlyticsCoreModule>();
-            builder.RegisterModule<DynamoModule>();
+            //builder.RegisterModule<DynamoModule>();
+            builder.RegisterModule<LocalFileModule>();
             var config = GlobalConfiguration.Configuration;
 
             // Register your Web API controllers.

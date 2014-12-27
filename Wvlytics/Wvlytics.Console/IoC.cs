@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Wvlytics.Config;
+using Wvlytics.Services;
 
 namespace Wvlytics.Console
 {
@@ -9,7 +10,10 @@ namespace Wvlytics.Console
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule<WvlyticsCoreModule>();
-            builder.RegisterModule<DynamoModule>();
+            
+            //builder.RegisterModule<DynamoModule>();
+            builder.RegisterModule<LocalFileModule>();
+            
             return builder.Build();
         }
     }

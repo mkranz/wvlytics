@@ -1,39 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using Wvlytics.Model;
+using Wvlytics.Services;
 
 namespace Wvlytics.Web.Controllers
 {
     public class MatchController : ApiController
     {
+        private readonly IQueryService _queryService;
+
+        public MatchController(IQueryService queryService)
+        {
+            _queryService = queryService;
+        }
+
         // GET api/match
-        public IEnumerable<string> Get()
+        public IEnumerable<MatchHistory> Get()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/match/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/match
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/match/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/match/5
-        public void Delete(int id)
-        {
+            return _queryService.GetMatchHistory();
         }
     }
 }
