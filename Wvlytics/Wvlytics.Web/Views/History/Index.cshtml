@@ -1,0 +1,209 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Wvlytics.Model
+@model IEnumerable<Wvlytics.Model.MatchHistory>
+
+@{
+    ViewBag.Title = "Scores";
+}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+@*<script src="http://code.highcharts.com/highcharts.js"></script>*@
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+
+<h2>History Charts</h2>
+   
+Select a Match: <input type="hidden" id="matches" style="width:800px"/>
+<button id="refresh" name="Refresh">Refresh</button>
+     
+<h3>Score</h3>
+<div id="score" style="width:100%; height:400px;"></div>
+<h3>Potential Points</h3>
+<div id="pp" style="width:100%; height:400px;"></div>
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.js"></script>
+    
+    
+@functions
+{
+
+    public static JObject History(MatchHistory m)
+    {
+        var obj = JObject.FromObject(m);
+        obj["id"] = m.MatchHistoryId;
+        obj["text"] = m.StartTime.ToString("yy-MM-dd") +" - "+ m.EndTime.ToString("yy-MM-dd")
+                + " : " +
+                m.RedWorldName + " vs " + m.GreenWorldName + " vs " + m.BlueWorldName;
+        return obj;
+    }
+}    
+
+<script>
+    matches = @Html.Raw(JsonConvert.SerializeObject(Model.Select(History)))
+</script>
+<script>
+    
+    var initChart = function(match, snapshotData) {
+        var redPP = [];
+        var greenPP = [];
+        var bluePP = [];
+        var red = [];
+        var green = [];
+        var blue = [];
+
+        snapshotData.forEach(function(item) {
+            var time = Date.parse(item.Timestamp);
+            redPP.push([time, item.Scores.RedPotentialPoints]);
+            greenPP.push([time, item.Scores.GreenPotentialPoints]);
+            bluePP.push([time, item.Scores.BluePotentialPoints]);
+
+            red.push([time, item.Scores.RedScore]);
+            green.push([time, item.Scores.GreenScore]);
+            blue.push([time, item.Scores.BlueScore]);
+        });
+
+        var rangeSelector = {
+            buttons: [
+                {
+                    type: 'hour',
+                    count: 1,
+                    text: '1h'
+                },
+                {
+                    type: 'hour',
+                    count: 6,
+                    text: '6h'
+                },
+                {
+                    type: 'hour',
+                    count: 12,
+                    text: '12h'
+                },
+                {
+                    type: 'day',
+                    count: 1,
+                    text: '1d'
+                },
+                {
+                    type: 'day',
+                    count: 3,
+                    text: '3d'
+                },
+                {
+                    type: 'all',
+                    text: 'All'
+                }
+            ]
+        };
+
+        $('#score').highcharts('StockChart',{
+            chart: {
+                type: 'spline'
+            },
+            rangeSelector: rangeSelector,
+            title: {
+                text: match.RedWorldName+' vs ' +match.GreenWorldName+' vs '+match.BlueWorldName
+            },
+            subtitle: {
+                text: new Date(match.StartTime).toDateString()+' - '+new Date(match.EndTime).toDateString()
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: 'Date / Time'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Potential Points'
+                },
+                min: 0
+            },
+            series: [
+                {
+                    name: match.RedWorldName,
+                    data: red,
+                    color: '#FF0000'
+                },
+                {
+                    name: match.GreenWorldName,
+                    data: green,
+                    color: '#00FF00'
+                },
+                {
+                    name: match.BlueWorldName,
+                    data: blue,
+                    color: '#0000FF'
+                }
+            ]
+        });
+
+
+        $('#pp').highcharts('StockChart',{
+            chart: {
+                type: 'spline'
+            },
+            rangeSelector: rangeSelector,
+            title: {
+                text: match.RedWorldName+' vs ' +match.GreenWorldName+' vs '+match.BlueWorldName
+            },
+            subtitle: {
+                text: new Date(match.StartTime).toDateString()+' - '+new Date(match.EndTime).toDateString()
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: 'Date / Time'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Potential Points'
+                },
+                min: 0
+            },
+            series: [
+                {
+                    name: match.RedWorldName,
+                    data: redPP,
+                    color: '#FF0000'
+                },
+                {
+                    name: match.GreenWorldName,
+                    data: greenPP,
+                    color: '#00FF00'
+                },
+                {
+                    name: match.BlueWorldName,
+                    data: bluePP,
+                    color: '#0000FF'
+                }
+            ]
+        });
+    }
+
+    loadMatch = function(matchId) {
+        var match = $.grep(matches, function(m) { return m.MatchHistoryId == matchId; })[0];
+        var url = 'http://wvlytics.local/api/Score/'+match.MatchHistoryId;
+
+        $.getJSON(url, function(snapshotData) {
+            initChart(match, snapshotData);
+        });
+    }
+
+    $(function () {
+        $('#matches').select2({
+            data: matches
+        });
+
+        $('#matches').on('change', function(e) {
+            loadMatch(e.val);
+        });
+        $('#refresh').on('click', function(e) {
+            loadMatch($('#matches').val());
+        });
+
+    });
+</script>
