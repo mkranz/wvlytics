@@ -2,9 +2,10 @@
 
 namespace Wvlytics.Model
 {
-    public struct ScoreSnapshot
+    public class ScoreSnapshot
     {
         public DateTime Timestamp { get; set; }
         public Score Scores { get; set; }
+
     }
 }

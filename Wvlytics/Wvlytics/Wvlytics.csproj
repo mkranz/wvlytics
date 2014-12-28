@@ -101,6 +101,7 @@
     <Compile Include="Model\BonusSnapshot.cs" />
     <Compile Include="Model\MapHistorySnapshot.cs" />
     <Compile Include="Model\ScoreSnapshot.cs" />
+    <Compile Include="Model\StatSnapshot.cs" />
     <Compile Include="Services\DynamoDBAppenderService.cs" />
     <Compile Include="Services\BinaryScoreReader.cs" />
     <Compile Include="Services\BinaryScoreWriter.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Services\IScoreReader.cs" />
     <Compile Include="Services\IScoreWriter.cs" />
     <Compile Include="Services\ISnapshottingService.cs" />
+    <Compile Include="Services\IStatsService.cs" />
     <Compile Include="Services\IWorldService.cs" />
     <Compile Include="Model\MatchHistory.cs" />
     <Compile Include="Model\MatchHistorySnapshot.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Services\LocalFileQueryService.cs" />
     <Compile Include="Services\BinaryObjectiveSnapshotWriter.cs" />
     <Compile Include="Services\SnapshottingService.cs" />
+    <Compile Include="Services\StatsService.cs" />
     <Compile Include="Util\MatchHistoryUtil.cs" />
     <Compile Include="Services\WorldService.cs" />
     <Compile Include="ChangePrinter.cs" />

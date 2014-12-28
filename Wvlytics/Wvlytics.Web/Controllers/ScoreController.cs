@@ -1,25 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Generic;
 using System.Web.Http;
-using Wvlytics.Model;
 using Wvlytics.Services;
 
 namespace Wvlytics.Web.Controllers
 {
     public class ScoreController : ApiController
     {
-        private readonly IQueryService _queryService;
+        private readonly IStatsService _statsService;
 
-        public ScoreController(IQueryService queryService)
+        public ScoreController(IStatsService statsService)
         {
-            _queryService = queryService;
+            _statsService = statsService;
         }
 
-        // GET api/score/2-2_14-12-19
-        public IEnumerable<ScoreSnapshot> Get(string id)
+        // GET api/killstats
+        public IEnumerable<Model.StatSnapshot> Get(string id)
         {
-            return _queryService.GetScoreHistory(id)
-                .ToList();
+            return _statsService.GetStats(id);
         }
     }
 }

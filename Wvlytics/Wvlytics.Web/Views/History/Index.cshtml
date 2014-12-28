@@ -11,15 +11,19 @@
 @*<script src="http://code.highcharts.com/highcharts.js"></script>*@
 <script src="http://code.highcharts.com/stock/highstock.js"></script>
 
-<h2>History Charts</h2>
+<h2>GW2 WvW Match History</h2>
    
 Select a Match: <input type="hidden" id="matches" style="width:800px"/>
 <button id="refresh" name="Refresh">Refresh</button>
-     
+   
 <h3>Score</h3>
 <div id="score" style="width:100%; height:400px;"></div>
 <h3>Potential Points</h3>
 <div id="pp" style="width:100%; height:400px;"></div>
+<h3>Kills (Total)</h3>
+<div id="killsTotal" style="width:100%; height:400px;"></div>
+<h3>Kills (Delta)</h3>
+<div id="killsDelta" style="width:100%; height:400px;"></div>
 
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" rel="stylesheet"/>
@@ -52,16 +56,39 @@ Select a Match: <input type="hidden" id="matches" style="width:800px"/>
         var red = [];
         var green = [];
         var blue = [];
+        var redKills = [];
+        var greenKills = [];
+        var blueKills = [];
+
+        var redKillsTotal = [];
+        var greenKillsTotal = [];
+        var blueKillsTotal = [];
+
+        var redKill = 0;
+        var greenKill = 0;
+        var blueKill = 0;
 
         snapshotData.forEach(function(item) {
             var time = Date.parse(item.Timestamp);
-            redPP.push([time, item.Scores.RedPotentialPoints]);
-            greenPP.push([time, item.Scores.GreenPotentialPoints]);
-            bluePP.push([time, item.Scores.BluePotentialPoints]);
+            redPP.push([time, item.RedPotentialPoints]);
+            greenPP.push([time, item.GreenPotentialPoints]);
+            bluePP.push([time, item.BluePotentialPoints]);
 
-            red.push([time, item.Scores.RedScore]);
-            green.push([time, item.Scores.GreenScore]);
-            blue.push([time, item.Scores.BlueScore]);
+            red.push([time, item.RedScore]);
+            green.push([time, item.GreenScore]);
+            blue.push([time, item.BlueScore]);
+
+            redKill += item.RedKills;
+            greenKill += item.GreenKills;
+            blueKill += item.BlueKills;
+            
+            redKills.push([time, item.RedKills]);
+            greenKills.push([time, item.GreenKills]);
+            blueKills.push([time, item.BlueKills]);
+
+            redKillsTotal.push([time, redKill]);
+            greenKillsTotal.push([time, greenKill]);
+            blueKillsTotal.push([time, blueKill]);
         });
 
         var rangeSelector = {
@@ -99,9 +126,6 @@ Select a Match: <input type="hidden" id="matches" style="width:800px"/>
         };
 
         $('#score').highcharts('StockChart',{
-            chart: {
-                type: 'spline'
-            },
             rangeSelector: rangeSelector,
             title: {
                 text: match.RedWorldName+' vs ' +match.GreenWorldName+' vs '+match.BlueWorldName
@@ -142,9 +166,6 @@ Select a Match: <input type="hidden" id="matches" style="width:800px"/>
 
 
         $('#pp').highcharts('StockChart',{
-            chart: {
-                type: 'spline'
-            },
             rangeSelector: rangeSelector,
             title: {
                 text: match.RedWorldName+' vs ' +match.GreenWorldName+' vs '+match.BlueWorldName
@@ -178,6 +199,84 @@ Select a Match: <input type="hidden" id="matches" style="width:800px"/>
                 {
                     name: match.BlueWorldName,
                     data: bluePP,
+                    color: '#0000FF'
+                }
+            ]
+        });
+
+        $('#killsTotal').highcharts('StockChart', {
+            rangeSelector: rangeSelector,
+            title: {
+                text: match.RedWorldName + ' vs ' + match.GreenWorldName + ' vs ' + match.BlueWorldName
+            },
+            subtitle: {
+                text: new Date(match.StartTime).toDateString() + ' - ' + new Date(match.EndTime).toDateString()
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: 'Date / Time'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Potential Points'
+                },
+                min: 0
+            },
+            series: [
+            {
+                name: match.RedWorldName,
+                data: redKillsTotal,
+                color: '#FF0000'
+            },
+            {
+                name: match.GreenWorldName,
+                data: greenKillsTotal,
+                color: '#00FF00'
+            },
+            {
+                name: match.BlueWorldName,
+                data: blueKillsTotal,
+                    color: '#0000FF'
+                }
+            ]
+        });
+
+        $('#killsDelta').highcharts('StockChart',{
+            rangeSelector: rangeSelector,
+            title: {
+                text: match.RedWorldName+' vs ' +match.GreenWorldName+' vs '+match.BlueWorldName
+            },
+            subtitle: {
+                text: new Date(match.StartTime).toDateString()+' - '+new Date(match.EndTime).toDateString()
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: 'Date / Time'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Potential Points'
+                },
+                min: 0
+            },
+            series: [
+                {
+                    name: match.RedWorldName,
+                    data: redKills,
+                    color: '#FF0000'
+                },
+                {
+                    name: match.GreenWorldName,
+                    data: greenKills,
+                    color: '#00FF00'
+                },
+                {
+                    name: match.BlueWorldName,
+                    data: blueKills,
                     color: '#0000FF'
                 }
             ]
