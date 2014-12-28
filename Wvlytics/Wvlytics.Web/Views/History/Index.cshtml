@@ -186,7 +186,8 @@ Select a Match: <input type="hidden" id="matches" style="width:800px"/>
 
     loadMatch = function(matchId) {
         var match = $.grep(matches, function(m) { return m.MatchHistoryId == matchId; })[0];
-        var url = 'http://wvlytics.local/api/Score/'+match.MatchHistoryId;
+        var routeTemplate = '@Url.RouteUrl("DefaultApi",new {id="[id]",controller="Score", httproute=""})';
+        var url = routeTemplate.replace('[id]', match.MatchHistoryId);
 
         $.getJSON(url, function(snapshotData) {
             initChart(match, snapshotData);
