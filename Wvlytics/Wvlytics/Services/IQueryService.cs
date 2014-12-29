@@ -7,5 +7,7 @@ namespace Wvlytics.Services
     {
         IEnumerable<MatchHistory> GetMatchHistory();
         IEnumerable<ScoreSnapshot> GetScoreHistory(string matchHistoryId);
+        IEnumerable<ObjectiveHistory> GetObjectiveHistory(string matchHistoryId, IEnumerable<int> objectives = null);
+        IEnumerable<ObjectiveHistory> GetObjectiveHistory(string matchHistoryId, string map);
     }
 }

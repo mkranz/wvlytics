@@ -98,10 +98,12 @@
     <Compile Include="Config\LocalFileModule.cs" />
     <Compile Include="Config\LocalPersistenceConfig.cs" />
     <Compile Include="Config\WvlyticsCoreModule.cs" />
+    <Compile Include="Model\AllObjectivesSnapshot.cs" />
     <Compile Include="Model\BonusSnapshot.cs" />
     <Compile Include="Model\MapHistorySnapshot.cs" />
     <Compile Include="Model\ScoreSnapshot.cs" />
     <Compile Include="Model\StatSnapshot.cs" />
+    <Compile Include="Services\BinaryObjectiveSnapshotReader.cs" />
     <Compile Include="Services\DynamoDBAppenderService.cs" />
     <Compile Include="Services\BinaryScoreReader.cs" />
     <Compile Include="Services\BinaryScoreWriter.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="Services\IMatchService.cs" />
     <Compile Include="Services\IMatchSnapshotService.cs" />
     <Compile Include="Services\IObjectiveService.cs" />
+    <Compile Include="Services\IObjectiveSnapshotReader.cs" />
     <Compile Include="Services\IObjectiveSnapshotWriter.cs" />
     <Compile Include="Services\IPrinterService.cs" />
     <Compile Include="Services\IQueryService.cs" />

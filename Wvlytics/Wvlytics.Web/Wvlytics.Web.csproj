@@ -118,6 +118,7 @@
   <ItemGroup>
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
+    <Compile Include="Controllers\ObjectivesController.cs" />
     <Compile Include="Controllers\ScoreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -156,6 +157,12 @@
       <Project>{43bc9355-ab5b-4bfb-aee1-b1e3a866068e}</Project>
       <Name>Wvlytics</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\History\Objectives.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

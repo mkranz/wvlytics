@@ -29,14 +29,14 @@ namespace Wvlytics.Services
                 }
             }
 
-            var dest = new Byte[240];
+            var buffer = new Byte[240];
 
-            redObjectives.CopyTo(dest, 0);
-            greenObjectives.CopyTo(dest, 80);
-            blueObjectives.CopyTo(dest, 160);
+            redObjectives.CopyTo(buffer, 0);
+            greenObjectives.CopyTo(buffer, 80);
+            blueObjectives.CopyTo(buffer, 160);
 
             Write(stream, timestamp.ToBinary());
-            stream.Write(dest, 0, dest.Length);
+            stream.Write(buffer, 0, buffer.Length);
         }
 
         protected void Write(Stream stream, long num)

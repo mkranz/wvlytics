@@ -27,5 +27,10 @@ namespace Wvlytics.Services
         {
             return Objectives.Value[objectiveId];
         }
+
+        public IEnumerable<Objective> GetAllObjectives()
+        {
+            return Objectives.Value.Values;
+        }
     }
 }

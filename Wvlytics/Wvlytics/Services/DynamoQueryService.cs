@@ -34,5 +34,15 @@ namespace Wvlytics.Services
                 .ToList();
             return snapshots;
         }
+
+        public IEnumerable<ObjectiveHistory> GetObjectiveHistory(string matchHistoryId, IEnumerable<int> objectives)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<ObjectiveHistory> GetObjectiveHistory(string matchHistoryId, string map)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

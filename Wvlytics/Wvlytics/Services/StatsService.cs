@@ -11,7 +11,7 @@ namespace Wvlytics.Services
         {
             _queryService = queryService;
         }
-
+        
         public IEnumerable<StatSnapshot> GetStats(string matchHistoryId)
         {
             ScoreSnapshot lastApply = null;

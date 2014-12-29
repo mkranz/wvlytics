@@ -10,6 +10,7 @@ namespace Wvlytics.Config
             builder.RegisterType<BinaryScoreWriter>().As<IScoreWriter>();
             builder.RegisterType<BinaryObjectiveSnapshotWriter>().As<IObjectiveSnapshotWriter>();
             builder.RegisterType<BinaryScoreReader>().As<IScoreReader>();
+            builder.RegisterType<BinaryObjectiveSnapshotReader>().As<IObjectiveSnapshotReader>();
             builder.RegisterType<LocalFileAppenderService>().As<IAppenderService>();
         }
     }

@@ -17,5 +17,10 @@ namespace Wvlytics.Web.Controllers
             return View(_queryService.GetMatchHistory());
         }
 
+        public ActionResult Objectives(string id)
+        {
+            return View(_queryService.GetObjectiveHistory(id, "RedHome"));
+        }
+
     }
 }
