@@ -40,10 +40,6 @@
     <Reference Include="AWSSDK">
       <HintPath>..\packages\AWSSDK.2.3.14.0\lib\net45\AWSSDK.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +47,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IoC.cs" />
@@ -63,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wvlytics\Wvlytics.csproj">
-      <Project>{43bc9355-ab5b-4bfb-aee1-b1e3a866068e}</Project>
+      <Project>{43BC9355-AB5B-4BFB-AEE1-B1E3A866068E}</Project>
       <Name>Wvlytics</Name>
     </ProjectReference>
   </ItemGroup>

@@ -18,7 +18,8 @@ namespace Wvlytics.Console
             var snapshotter = container.Resolve<ISnapshottingService>();
 
             new Task(() => SnapshotLoop(snapshotter)).Start();
-            System.Console.ReadKey();
+			while (_running) {}
+			//System.Console.ReadKey ();
             _running = false;
         }
 
