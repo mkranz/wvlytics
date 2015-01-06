@@ -37,7 +37,7 @@ Select a Match: <input type="hidden" id="matches" style="width:800px"/>
     {
         var obj = JObject.FromObject(m);
         obj["id"] = m.MatchHistoryId;
-        obj["text"] = m.StartTime.ToString("yy-MM-dd") +" - "+ m.EndTime.ToString("yy-MM-dd")
+        obj["text"] = m.StartTime.ToString("yyyy-MM-dd") +" - "+ m.EndTime.ToString("yyyy-MM-dd")
                 + " : " +
                 m.RedWorldName + " vs " + m.GreenWorldName + " vs " + m.BlueWorldName;
         return obj;
