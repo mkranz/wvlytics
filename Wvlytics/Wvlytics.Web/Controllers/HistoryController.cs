@@ -17,9 +17,9 @@ namespace Wvlytics.Web.Controllers
             return View(_queryService.GetMatchHistory());
         }
 
-        public ActionResult Objectives(string id)
+		public ActionResult Objectives(string id, string map)
         {
-            return View(_queryService.GetObjectiveHistory(id, "RedHome"));
+            return View(_queryService.GetObjectiveHistory(id, map));
         }
 
     }
