@@ -15,10 +15,10 @@
 <h3>@Model.Match.StartTime.ToString("yyyy-MM-dd") - @Model.Match.EndTime.ToString("yyyy-MM-dd")</h3>
 
 <h3>Maps</h3>
-<a href='#' class='map' data-map='RedHome'>Red Borderlands</a>      
-<a href='#' class='map' data-map='GreenHome'>Green Borderlands</a>
-<a href='#' class='map' data-map='BlueHome'>Blue Borderlands</a>
-<a href='#' class='map' data-map='Center'>Eternal Battlegrounds</a>
+@Html.ActionLink("Red Borderlands","Objectives","History",new {id=@Model.Match.MatchHistoryId,map="RedHome"},null)
+@Html.ActionLink("Green Borderlands","Objectives","History",new {id=@Model.Match.MatchHistoryId,map="GreenHome"},null)
+@Html.ActionLink("Blue Borderlands","Objectives","History",new {id=@Model.Match.MatchHistoryId,map="BlueHome"},null)
+@Html.ActionLink("Eternal Battlegrounds","Objectives","History",new {id=@Model.Match.MatchHistoryId,map="Center"},null)
 
 <h3>Score</h3>
 <div id="score" style="width:100%; height:400px;"></div>
@@ -289,25 +289,10 @@
 
     loadMatch = function() {
         var url = '@Url.RouteUrl("DefaultApi",new {id=@Model.Match.MatchHistoryId,controller="Score", httproute=""})';
-
         $.getJSON(url, initChart);
     }
 
     $(function () {
-        $('#matches').on('change', function(e) {
-            loadMatch();
-
-            $('.map').each(function() {
-	        	var mapId = $(this).attr('data-map');
-	        	var url = '/History/Objectives/'+match.MatchHistoryId+'?map='+mapId;
-	        	$(this).attr('href',url);
-	        });
-
-        });
-        $('#refresh').on('click', function(e) {
-            loadMatch();
-        });
-
         loadMatch();
     });
 </script>

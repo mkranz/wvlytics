@@ -15,7 +15,11 @@ namespace Wvlytics.Web.Controllers
 
 		public ActionResult Index ()
 		{
-			return View (_queryService.GetMatchHistory ());
+			var matches = _queryService.GetMatchHistory ()
+				.ToList ()
+				.OrderByDescending (x => x.StartTime);
+
+			return View (matches);
 		}
 
 		public ActionResult Match(string matchId)
