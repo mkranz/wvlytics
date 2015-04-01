@@ -22,7 +22,7 @@ namespace Wvlytics.Services
             var objectiveHistory = GetObjectives(objectiveIds).Select(x => new ObjectiveHistory()
             {
                 Id = x.id,
-                Name = x.name,
+				Name = x.GetNiceName(),
                 Owners = new List<ObjectiveOwner>()
             }).ToList();
 
