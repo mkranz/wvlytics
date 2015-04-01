@@ -1,0 +1,313 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Wvlytics.Model
+@model Wvlytics.Web.MatchHistoryViewModel
+
+@{
+    ViewBag.Title = "Scores";
+}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+@*<script src="http://code.highcharts.com/highcharts.js"></script>*@
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+
+<h2>@Model.Match.RedWorldName vs @Model.Match.GreenWorldName vs @Model.Match.BlueWorldName</h2>
+<h3>@Model.Match.StartTime.ToString("yyyy-MM-dd") - @Model.Match.EndTime.ToString("yyyy-MM-dd")</h3>
+
+<h3>Maps</h3>
+<a href='#' class='map' data-map='RedHome'>Red Borderlands</a>      
+<a href='#' class='map' data-map='GreenHome'>Green Borderlands</a>
+<a href='#' class='map' data-map='BlueHome'>Blue Borderlands</a>
+<a href='#' class='map' data-map='Center'>Eternal Battlegrounds</a>
+
+<h3>Score</h3>
+<div id="score" style="width:100%; height:400px;"></div>
+<h3>Potential Points</h3>
+<div id="pp" style="width:100%; height:400px;"></div>
+<h3>Kills (Total)</h3>
+<div id="killsTotal" style="width:100%; height:400px;"></div>
+<h3>Kills (Delta)</h3>
+<div id="killsDelta" style="width:100%; height:400px;"></div>
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.js"></script>
+    
+    
+@functions
+{
+
+    public static JObject History(MatchHistory m)
+    {
+        var obj = JObject.FromObject(m);
+        obj["id"] = m.MatchHistoryId;
+        obj["text"] = m.StartTime.ToString("yyyy-MM-dd") +" - "+ m.EndTime.ToString("yyyy-MM-dd")
+                + " : " +
+                m.RedWorldName + " vs " + m.GreenWorldName + " vs " + m.BlueWorldName;
+        return obj;
+    }
+}    
+
+<script>
+    match = @Html.Raw(JsonConvert.SerializeObject(Model.Match))
+</script>
+<script>
+    
+    var initChart = function(snapshotData) {
+        var redPP = [];
+        var greenPP = [];
+        var bluePP = [];
+        var red = [];
+        var green = [];
+        var blue = [];
+        var redKills = [];
+        var greenKills = [];
+        var blueKills = [];
+
+        var redKillsTotal = [];
+        var greenKillsTotal = [];
+        var blueKillsTotal = [];
+
+        var redKill = 0;
+        var greenKill = 0;
+        var blueKill = 0;
+
+        snapshotData.forEach(function(item) {
+            var time = Date.parse(item.Timestamp);
+            redPP.push([time, item.RedPotentialPoints]);
+            greenPP.push([time, item.GreenPotentialPoints]);
+            bluePP.push([time, item.BluePotentialPoints]);
+
+            red.push([time, item.RedScore]);
+            green.push([time, item.GreenScore]);
+            blue.push([time, item.BlueScore]);
+
+            redKill += item.RedKills;
+            greenKill += item.GreenKills;
+            blueKill += item.BlueKills;
+            
+            redKills.push([time, item.RedKills]);
+            greenKills.push([time, item.GreenKills]);
+            blueKills.push([time, item.BlueKills]);
+
+            redKillsTotal.push([time, redKill]);
+            greenKillsTotal.push([time, greenKill]);
+            blueKillsTotal.push([time, blueKill]);
+        });
+
+        var rangeSelector = {
+            buttons: [
+                {
+                    type: 'hour',
+                    count: 1,
+                    text: '1h'
+                },
+                {
+                    type: 'hour',
+                    count: 6,
+                    text: '6h'
+                },
+                {
+                    type: 'hour',
+                    count: 12,
+                    text: '12h'
+                },
+                {
+                    type: 'day',
+                    count: 1,
+                    text: '1d'
+                },
+                {
+                    type: 'day',
+                    count: 3,
+                    text: '3d'
+                },
+                {
+                    type: 'all',
+                    text: 'All'
+                }
+            ]
+        };
+
+        $('#score').highcharts('StockChart',{
+            rangeSelector: rangeSelector,
+            title: {
+                text: match.RedWorldName+' vs ' +match.GreenWorldName+' vs '+match.BlueWorldName
+            },
+            subtitle: {
+                text: new Date(match.StartTime).toDateString()+' - '+new Date(match.EndTime).toDateString()
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: 'Date / Time'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Points'
+                },
+                min: 0
+            },
+            series: [
+                {
+                    name: match.RedWorldName,
+                    data: red,
+                    color: '#FF0000'
+                },
+                {
+                    name: match.GreenWorldName,
+                    data: green,
+                    color: '#00FF00'
+                },
+                {
+                    name: match.BlueWorldName,
+                    data: blue,
+                    color: '#0000FF'
+                }
+            ]
+        });
+
+
+        $('#pp').highcharts('StockChart',{
+            rangeSelector: rangeSelector,
+            title: {
+                text: match.RedWorldName+' vs ' +match.GreenWorldName+' vs '+match.BlueWorldName
+            },
+            subtitle: {
+                text: new Date(match.StartTime).toDateString()+' - '+new Date(match.EndTime).toDateString()
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: 'Date / Time'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Potential Points'
+                },
+                min: 0
+            },
+            series: [
+                {
+                    name: match.RedWorldName,
+                    data: redPP,
+                    color: '#FF0000'
+                },
+                {
+                    name: match.GreenWorldName,
+                    data: greenPP,
+                    color: '#00FF00'
+                },
+                {
+                    name: match.BlueWorldName,
+                    data: bluePP,
+                    color: '#0000FF'
+                }
+            ]
+        });
+
+        $('#killsTotal').highcharts('StockChart', {
+            rangeSelector: rangeSelector,
+            title: {
+                text: match.RedWorldName + ' vs ' + match.GreenWorldName + ' vs ' + match.BlueWorldName
+            },
+            subtitle: {
+                text: new Date(match.StartTime).toDateString() + ' - ' + new Date(match.EndTime).toDateString()
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: 'Date / Time'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Total Kills'
+                },
+                min: 0
+            },
+            series: [
+            {
+                name: match.RedWorldName,
+                data: redKillsTotal,
+                color: '#FF0000'
+            },
+            {
+                name: match.GreenWorldName,
+                data: greenKillsTotal,
+                color: '#00FF00'
+            },
+            {
+                name: match.BlueWorldName,
+                data: blueKillsTotal,
+                    color: '#0000FF'
+                }
+            ]
+        });
+
+        $('#killsDelta').highcharts('StockChart',{
+            rangeSelector: rangeSelector,
+            title: {
+                text: match.RedWorldName+' vs ' +match.GreenWorldName+' vs '+match.BlueWorldName
+            },
+            subtitle: {
+                text: new Date(match.StartTime).toDateString()+' - '+new Date(match.EndTime).toDateString()
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: 'Date / Time'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Kills / min'
+                },
+                min: 0
+            },
+            series: [
+                {
+                    name: match.RedWorldName,
+                    data: redKills,
+                    color: '#FF0000'
+                },
+                {
+                    name: match.GreenWorldName,
+                    data: greenKills,
+                    color: '#00FF00'
+                },
+                {
+                    name: match.BlueWorldName,
+                    data: blueKills,
+                    color: '#0000FF'
+                }
+            ]
+        });
+    }
+
+    loadMatch = function() {
+        var url = '@Url.RouteUrl("DefaultApi",new {id=@Model.Match.MatchHistoryId,controller="Score", httproute=""})';
+
+        $.getJSON(url, initChart);
+    }
+
+    $(function () {
+        $('#matches').on('change', function(e) {
+            loadMatch();
+
+            $('.map').each(function() {
+	        	var mapId = $(this).attr('data-map');
+	        	var url = '/History/Objectives/'+match.MatchHistoryId+'?map='+mapId;
+	        	$(this).attr('href',url);
+	        });
+
+        });
+        $('#refresh').on('click', function(e) {
+            loadMatch();
+        });
+
+        loadMatch();
+    });
+</script>
