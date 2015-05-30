@@ -10,8 +10,21 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 @*<script src="http://code.highcharts.com/highcharts.js"></script>*@
 <script src="http://code.highcharts.com/stock/highstock.js"></script>
+<style>
+    .RedWorld {
+        color: #cc0000;
+    }
+    .GreenWorld {
+        color: #669900;
+    }
+    .BlueWorld {
+        color: #0085CC;
+    }
+</style>   
 
-<h2>@Model.Match.RedWorldName vs @Model.Match.GreenWorldName vs @Model.Match.BlueWorldName</h2>
+
+<h2>Scores</h2>
+<h2><span class="RedWorld">@Model.Match.RedWorldName</span> vs <span class="GreenWorld">@Model.Match.GreenWorldName</span> vs <span class="BlueWorld">@Model.Match.BlueWorldName</span></h2>
 <h3>@Model.Match.StartTime.ToString("yyyy-MM-dd") - @Model.Match.EndTime.ToString("yyyy-MM-dd")</h3>
 
 <h3>Maps</h3>

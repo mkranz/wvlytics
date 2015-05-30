@@ -1,12 +1,9 @@
-﻿@model System.Collections.Generic.IEnumerable<Wvlytics.Model.ObjectiveHistory>
+﻿@model Wvlytics.Web.ObjectiveHistoryViewModel
 
 @{
     ViewBag.Title = "Objective History";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Objective History</h2>
-    
 <style>
     .objective {
         width: 100%;
@@ -28,18 +25,59 @@
         background-color: #0085CC;
     }
     .Neutral {
-        background-color: #bbbbbb;
+        color: #bbbbbb;
     }
+    .RedWorld {
+        color: #cc0000;
+    }
+    .GreenWorld {
+        color: #669900;
+    }
+    .BlueWorld {
+        color: #0085CC;
+    }
+
+    .ticks {
+        width: 100%;
+        background-color: white;
+        font-size:0;
+        position:fixed;
+        bottom:0;
+        overflow: none;
+    }
+    .tick {
+        height: 80px;
+        display: inline-block;    
+    }
+    .ticktext {
+    	transform: rotate(-90deg)
+    }
+
 </style>    
 
-@foreach (var objective in Model)
+<h2>Objective History</h2>
+<h2><span class="RedWorld">@Model.Match.RedWorldName</span> vs <span class="GreenWorld">@Model.Match.GreenWorldName</span> vs <span class="BlueWorld">@Model.Match.BlueWorldName</span></h2>
+<h3>@Model.Match.StartTime.ToString("yyyy-MM-dd") - @Model.Match.EndTime.ToString("yyyy-MM-dd")</h3>
+
+<div>
+<div class="ticks">
+	@foreach(var tick in Model.GetTimes()) {
+		<div class="tick"  style="width:@(Math.Floor(tick.Percent*1000000)/10000)%">
+		</div>
+	}
+</div>
+
+            
+@foreach (var objective in Model.Objectives)
 {
     <h3>@objective.Name</h3>
     <div id="@objective.Id" class="objective">
         @foreach (var bar in objective.GetObjectiveBars())
         {
             <div class="owner @bar.Owner" style="width:@(Math.Floor(bar.Percent*1000000)/10000)%">
+            	
             </div>
         }
     </div>
 }
+</div>

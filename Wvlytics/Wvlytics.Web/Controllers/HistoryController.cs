@@ -38,7 +38,16 @@ namespace Wvlytics.Web.Controllers
 
 		public ActionResult Objectives (string id, string map)
 		{
-			return View (_queryService.GetObjectiveHistory (id, map));
+			var match = _queryService.GetMatchHistory ().FirstOrDefault (x => x.MatchHistoryId == id);
+			if (match == null) {
+				return RedirectToAction("Index");
+			}
+
+			var model = new ObjectiveHistoryViewModel () {
+				Match = match,
+				Objectives = _queryService.GetObjectiveHistory (id, map)
+			};
+			return View (model);
 		}
 
 	}
